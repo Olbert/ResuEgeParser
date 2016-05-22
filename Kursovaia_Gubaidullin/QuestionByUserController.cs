@@ -44,6 +44,6 @@ namespace DatabaseMVC
             Form f = new Settings();
             f.Show();
         }
-
+        
     }
 }

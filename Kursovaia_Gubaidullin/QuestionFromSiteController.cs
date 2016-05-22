@@ -17,10 +17,6 @@ namespace DatabaseMVC
 
         static View view;
         static Model model;
-        //string path = Directory.GetCurrentDirectory();
-        //string Dirpath = Directory.GetCurrentDirectory();
-        //string DialogPath;
-        // public string CCompilerPath = null, SCompilerPath = null, PCompilerPath = null;
         int[][] History; //возможно понадобится
         static int CurrentQuestion = 0;
         [STAThread]

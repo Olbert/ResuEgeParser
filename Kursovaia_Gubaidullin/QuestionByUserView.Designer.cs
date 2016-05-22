@@ -55,11 +55,11 @@
             this.ImageSelectionButton = new System.Windows.Forms.Button();
             this.QuestionBox = new System.Windows.Forms.RichTextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.QuestionNum = new System.Windows.Forms.Label();
             this.SourceBox = new System.Windows.Forms.RichTextBox();
             this.ExplanationBox = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.QuestionNum = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.AnswersGrid)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -232,7 +232,7 @@
             // 
             // CorrectAnswerBox
             // 
-            this.CorrectAnswerBox.Location = new System.Drawing.Point(341, 165);
+            this.CorrectAnswerBox.Location = new System.Drawing.Point(341, 186);
             this.CorrectAnswerBox.Name = "CorrectAnswerBox";
             this.CorrectAnswerBox.Size = new System.Drawing.Size(417, 20);
             this.CorrectAnswerBox.TabIndex = 10;
@@ -319,23 +319,14 @@
             this.label7.TabIndex = 19;
             this.label7.Text = "Текущий номер вопроса в тесте:";
             // 
-            // QuestionNum
-            // 
-            this.QuestionNum.AutoSize = true;
-            this.QuestionNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.QuestionNum.Location = new System.Drawing.Point(649, 24);
-            this.QuestionNum.Name = "QuestionNum";
-            this.QuestionNum.Size = new System.Drawing.Size(22, 24);
-            this.QuestionNum.TabIndex = 20;
-            this.QuestionNum.Text = "Х";
-            // 
             // SourceBox
             // 
-            this.SourceBox.Location = new System.Drawing.Point(764, 218);
+            this.SourceBox.Location = new System.Drawing.Point(12, 27);
             this.SourceBox.Name = "SourceBox";
-            this.SourceBox.Size = new System.Drawing.Size(778, 421);
+            this.SourceBox.Size = new System.Drawing.Size(778, 442);
             this.SourceBox.TabIndex = 21;
             this.SourceBox.Text = "";
+            this.SourceBox.Visible = false;
             // 
             // ExplanationBox
             // 
@@ -354,7 +345,6 @@
             this.label4.Size = new System.Drawing.Size(111, 20);
             this.label4.TabIndex = 23;
             this.label4.Text = "Пояснение: ";
-            this.label4.Visible = false;
             // 
             // label6
             // 
@@ -365,7 +355,13 @@
             this.label6.Size = new System.Drawing.Size(216, 13);
             this.label6.TabIndex = 24;
             this.label6.Text = "(если пользователь дал неверный ответ)\r\n";
-            this.label6.Visible = false;
+            // 
+            // QuestionNum
+            // 
+            this.QuestionNum.Location = new System.Drawing.Point(649, 27);
+            this.QuestionNum.Name = "QuestionNum";
+            this.QuestionNum.Size = new System.Drawing.Size(32, 20);
+            this.QuestionNum.TabIndex = 25;
             // 
             // QuestionByUserView
             // 
@@ -373,10 +369,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 483);
             this.Controls.Add(this.SourceBox);
+            this.Controls.Add(this.QuestionNum);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ExplanationBox);
-            this.Controls.Add(this.QuestionNum);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.QuestionBox);
             this.Controls.Add(this.ImageSelectionButton);
@@ -433,11 +429,11 @@
         private System.Windows.Forms.Button ImageSelectionButton;
         private System.Windows.Forms.RichTextBox QuestionBox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label QuestionNum;
         private System.Windows.Forms.RichTextBox SourceBox;
         private System.Windows.Forms.ToolStripMenuItem Settings;
         private System.Windows.Forms.RichTextBox ExplanationBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox QuestionNum;
     }
 }

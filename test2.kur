@@ -1,0 +1,5 @@
+a1;Вопрос1;true;Ответ1@false#Ответ2@false;false;;false;;
+a2;Вопрос2;false;Ответ;true;Это был ответ;false;;
+a3;Вопрос3;true;Ответ1@true#Ответ2@false#Ответ3@false;false;;true;место для изображения;
+a4;Вопрос4;false;Ответ;true;Это был ответ;false;;
+

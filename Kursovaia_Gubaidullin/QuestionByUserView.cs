@@ -37,6 +37,13 @@ namespace DatabaseMVC
             ImageSelectionLabel.Visible = false;
             ImageDirectoryBox.Visible = false;
             ImageSelectionButton.Visible = false;
+
+            CorrectAnswerBox.Clear();
+            ExplanationBox.Clear();
+            ImageDirectoryBox.Clear();
+            QuestionBox.Clear();
+            AnswersGrid.Rows.Clear();
+            Update();
         }
         public void Prepare(EventHandler Settings_Click, EventHandler Help_Click)
         {
@@ -70,65 +77,28 @@ namespace DatabaseMVC
         {
             if (QuestionBox.Text.Length != 0)
             {
-                //      Варианты вопросов
-                //  1. с вариантами без картинки
-                //  2. без вариантов без картинки
-                //  3. с вариантами с картинкой
-                //  4. без вариантов с картинкой
-
                 if (IsAnswerExistBox.SelectedIndex == 0)
                 {
-                    if (IsImageExistBox.SelectedIndex == 0)
-                        SourceBox.Text += 3;
-                    else
-                        SourceBox.Text += 1;
-                }
-                else
-                {
-                    if (IsImageExistBox.SelectedIndex == 0)
-                        SourceBox.Text += 4;
-                    else
-                        SourceBox.Text += 2;
-                }
-                SourceBox.Text += ';';
-                SourceBox.Text += QuestionBox.Text;
-                SourceBox.Text += ';';
-
-                for (int z = 0; z < AnswersGrid.RowCount - 1; z++)
-                {
-                    if (z!=0)
-                        SourceBox.Text += '#';//Переход
-                    string q = Convert.ToString(AnswersGrid.Rows[z].Cells[0].Value);
-                    string a = Convert.ToString(AnswersGrid.Rows[z].Cells[1].Value);
-                    if (q.Length != 0 && a.Length != 0)
+                    int Length = AnswersGrid.Rows.Count;
+                    string[] Cell1 = new string[Length], Cell2 = new string[Length];
+                    for (int z = 0; z < Length - 1; z++)
                     {
-                        SourceBox.Text += q + '@'; //Ответ
-                        SourceBox.Text += a; 
+                        Cell1[z] = Convert.ToString(AnswersGrid.Rows[z].Cells[0].Value);
+                        if (Convert.ToString(AnswersGrid.Rows[z].Cells[1].Value) == "Да")
+                        {
+                            Cell2[z] = "true";
+                        }
+                        else
+                            Cell2[z] = "false";
                     }
+                    SourceBox.Text += Memory.Save(QuestionNum.Text, QuestionBox.Text, ImageDirectoryBox.Text, ExplanationBox.Text, Cell1, Cell2);
                 }
-                SourceBox.Text += ';';
-                if (ExplanationBox.Text.Length == 0)
-                    SourceBox.Text += 0;
                 else
-                {
-                    SourceBox.Text += 1;
-                    SourceBox.Text += ';';
-                    SourceBox.Text += ExplanationBox.Text;
-                }
-                SourceBox.Text += ';';
+                    SourceBox.Text += Memory.Save(QuestionNum.Text, QuestionBox.Text, ImageDirectoryBox.Text, ExplanationBox.Text, CorrectAnswerBox.Text);
 
-                if (IsAnswerExistBox.SelectedIndex == 0)
-                {
-                    SourceBox.Text += 1;
-                    SourceBox.Text += ImageDirectoryBox.Text;
-                    
-                }
-                else
-                    SourceBox.Text += 0;
-                SourceBox.Text += ';';
-                SourceBox.Text += '\n';
                 Clean();
             }
+
         }
         private void NewDialog_Click(object sender, EventArgs e)//сделано
         {
@@ -164,18 +134,15 @@ namespace DatabaseMVC
 
         private void OK_Click(object sender, EventArgs e)//сделано
         {
-            NextQuestion_Click(sender, e);
-            SaveFileDialog s = new SaveFileDialog();
-            s.Filter = "KUR|*.kur";
-            if (s.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Stream str = File.OpenWrite(s.FileName);
-                StreamWriter wr = new StreamWriter(str);
-                wr.Write(SourceBox.Text);
-                wr.Dispose();
-                wr.Close();
-            }
 
+            if (SourceBox.Text.Length != 0&& SourceBox.Visible)
+                Memory.Save(SourceBox.Text);
+            else
+            {
+                if (QuestionBox.Text.Length != 0)
+                    NextQuestion_Click(sender, e);
+            }
+            Memory.SaveFile();
             this.Close();
         }
 
@@ -196,9 +163,18 @@ namespace DatabaseMVC
 
         private void IsImageExistBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ImageSelectionLabel.Visible = true;
-            ImageDirectoryBox.Visible = true;
-            ImageSelectionButton.Visible = true;
+            if (IsImageExistBox.SelectedIndex == 0)
+            {
+                ImageSelectionLabel.Visible = true;
+                ImageDirectoryBox.Visible = true;
+                ImageSelectionButton.Visible = true;
+            }
+            else
+            {
+                ImageSelectionLabel.Visible = false;
+                ImageDirectoryBox.Visible = false;
+                ImageSelectionButton.Visible = false;
+            }
         }
 
         private void ImageSelectionButton_Click(object sender, EventArgs e)
@@ -206,7 +182,7 @@ namespace DatabaseMVC
             try
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                openFileDialog1.Filter = "jpg|*.jpg, bmp | *.bmp, gif | *.gif, png | *.png, tiff | *.tiff, ico | *.ico";
+                openFileDialog1.Filter = "JPG |*.jpg| BMP |*.bmp| GIF|*.gif| PNG |*.png| TIFF|*.tiff| ICO|*.ico| Все файлы | *.*";
                 openFileDialog1.Title = "Select an image";
 
                 if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
