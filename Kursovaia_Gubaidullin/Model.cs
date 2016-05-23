@@ -26,7 +26,7 @@ namespace DatabaseMVC
             public string Image;
             public bool HasExplain;
             public string Explain;
-            
+
 
             public class Answer
             {
@@ -49,10 +49,10 @@ namespace DatabaseMVC
             }
             public Message(string _QuestionNum,
                             string _Question,
-                            bool _HasImage,
-                            string _Image,
                             bool _HasExplain,
                             string _Explain,
+                            bool _HasImage,
+                            string _Image,
                             Answer[] _answers)
             {
                 this.QuestionNum = _QuestionNum;
@@ -66,10 +66,11 @@ namespace DatabaseMVC
             }
             public Message(string _QuestionNum,
                             string _Question,
-                            bool _HasImage,
-                            string _Image,
+
                             bool _HasExplain,
                             string _Explain,
+                            bool _HasImage,
+                            string _Image,
                             string _answer)
             {
                 this.QuestionNum = _QuestionNum;

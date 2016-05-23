@@ -29,7 +29,7 @@ namespace DatabaseMVC
 
             //Вообще структура имеет вид конечного детерменированного автомата без циклов
 
-            
+
             //QuestionNum
             Text += _QuestionNum;
             Text += ';';
@@ -40,7 +40,7 @@ namespace DatabaseMVC
             Text += "true";
             Text += ';';
             //Answers@IsTrue#
-            for (int z = 0; z < _answers.Length-1; z++)
+            for (int z = 0; z < _answers.Length - 1; z++)
             {
                 if (z != 0)
                     Text += '#';//Переход
@@ -129,10 +129,10 @@ namespace DatabaseMVC
         }
         public static string Save(string _Text)
         {
-            
+
             //QuestionNum
             Text += _Text;
-            
+
             //sW.WriteLine(Text);
             return Text;
         }
@@ -147,7 +147,7 @@ namespace DatabaseMVC
 
                 if (SaveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    sW = new StreamWriter(SaveFileDialog1.FileName);
+                    sW = new StreamWriter(SaveFileDialog1.FileName,, Encoding.UTF8);
                     sW.WriteLine(Text);
                     sW.Close();
                 }
@@ -162,7 +162,7 @@ namespace DatabaseMVC
         }
         public static void LoadFile()
         {
-            
+           
             try
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -171,16 +171,16 @@ namespace DatabaseMVC
 
                 if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    sR = new StreamReader(openFileDialog1.FileName);
+                    sR = new StreamReader(openFileDialog1.FileName,Encoding.UTF8);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
             }
-
             
             //sR = new StreamReader(@"C:\Users\iampi\OneDrive\Polikashin2016\ResuEgeParser\test2.kur");
+            //sR = new StreamReader(@"C:\Users\iampi\Documents\test.kur");
         }
 
         public static Model.Message GetMessage(int skip)
@@ -200,15 +200,18 @@ namespace DatabaseMVC
 
             //Х; Вопрос1; true; Ответ1 @false; true; Пояснение; false; ;
 
-            if (str[0] == "1")
+            string QuestionNum = str[0];
+            string Question = str[1];
+            if (Convert.ToBoolean(str[2]))
             {
-                string[] anss = str[3].Split('#');
-                string[] answers = new string[anss.Length], IsTrue = new string[anss.Length];
+                string[] ALL = str[3].Split('#');
+                string[] answers = new string[ALL.Length];
+                string[] IsTrue = new string[ALL.Length];
 
                 int k = 0;
-                for (int i = 0; i < anss.Length; i++)
+                for (int i = 0; i < ALL.Length; i++)
                 {
-                    string[] a = anss[i].Split('@');
+                    string[] a = ALL[i].Split('@');
                     answers[k] = a[0];
                     IsTrue[k] = a[1];
                     k++;
@@ -219,11 +222,11 @@ namespace DatabaseMVC
                 {
                     ans[i] = new Model.Message.Answer(answers[i], Convert.ToBoolean(IsTrue[i]));
                 }
-                return new Model.Message(str[1], str[2], Convert.ToBoolean(str[4]), str[5], Convert.ToBoolean(str[6]), str[7], ans);
+                return new Model.Message(str[0], str[1], Convert.ToBoolean(str[4]), str[5], Convert.ToBoolean(str[6]), str[7], ans);
             }
             else
             {
-                return new Model.Message(str[1], str[2], Convert.ToBoolean(str[4]), str[5], Convert.ToBoolean(str[6]), str[7], str[3]);
+                return new Model.Message(str[0], str[1], Convert.ToBoolean(str[4]), str[5], Convert.ToBoolean(str[6]), str[7], str[3]);
             }
         }
         public static bool EOF()
