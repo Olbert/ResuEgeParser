@@ -147,7 +147,8 @@ namespace DatabaseMVC
 
                 if (SaveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    sW = new StreamWriter(SaveFileDialog1.FileName,, Encoding.UTF8);
+                    sW = new StreamWriter(SaveFileDialog1.FileName);
+                    
                     sW.WriteLine(Text);
                     sW.Close();
                 }
